@@ -11,18 +11,18 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
-const ADMIN_PASSWORD_HASH = '$2b$10$22mB907tA1jG04T3d8qUo.d4n5r6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0';
-
+// Clever Cloud dia manome ireo variables ireo ho azy aorian'ny fampifandraisana
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  database: 'presence_ny_havana',
-  password: 'Falitiana07!',
+  host: process.env.MYSQL_ADDON_HOST,
+  user: process.env.MYSQL_ADDON_USER,
+  database: process.env.MYSQL_ADDON_DB,
+  password: process.env.MYSQL_ADDON_PASSWORD,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
-  
 });
+
+const ADMIN_PASSWORD_HASH = '$2b$10$22mB907tA1jG04T3d8qUo.d4n5r6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0';
 
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
@@ -559,7 +559,7 @@ app.get('/api/chart/weekly-employee-count', async (req, res) => {
         `;
         const [rows] = await pool.execute(query, [targetDate, targetDate]);
 
-        const dayLabels = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+        const dayLabels = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Sabotsy'];
         const labels = dayLabels.slice(1, 7);
         const values = new Array(6).fill(0);
 
